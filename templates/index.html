@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+
+{% block body %}
+    <h1> Welcome to Snake! </h1>
+    <div class="space-below">
+        You know the rules.
+    </div>
+    <div>
+        <form action="{{ url_for('gamepage') }}" method="post">
+            <button type="submit" class="button">
+                PLAY
+            </button>
+        </form>
+    </div>
+{% endblock %}
