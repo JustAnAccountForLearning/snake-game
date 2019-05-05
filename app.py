@@ -10,6 +10,8 @@ DATABASE = '~Documents/Snake/static/scores.db'
 def index():
     return render_template("index.html")
 
-@app.route('/gamepage', methods=['POST'])
+@app.route('/gamepage', methods=['POST','GET'])
 def gamepage():
+    if request.method == "GET":
+        return redirect("index")
     return render_template("gamepage.html")
