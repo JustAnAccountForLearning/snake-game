@@ -79,8 +79,8 @@ function moveSnake() {
 
 function reset() {
     // Set a new location for the food
-    food.x = Math.random() * (canvas.width - BLOCK);
-    food.y = Math.random() * (canvas.height - BLOCK);
+    food.x = Math.ceil((Math.random() * (canvas.width - BLOCK)) / BLOCK) * BLOCK;
+    food.y = Math.ceil((Math.random() * (canvas.height - BLOCK)) / BLOCK) * BLOCK;
 
     snek.direction = snek.newDirection = 'RIGHT';
     snek.body = [[0,250]];
