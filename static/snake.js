@@ -1,7 +1,7 @@
 let canvas = document.querySelector('.myCanvas');
 let ctx = canvas.getContext('2d');
 const BLOCK = 25;
-const START_SNAKE_LENGTH = 6;
+const START_SNAKE_LENGTH = 12;
 let NEWGAME = 0;
 let SCORE = 0;
 drawCanvas();
@@ -71,7 +71,7 @@ function moveSnake() {
     
     // Redraw and recheck the screen
     // Order of drawCanvas > drawSnake > dropNewFood > collison retains a very smooth image
-    drawCanvas();
+    drawCanvas('rgb(0,0,0)');
     drawSnake();
     dropFood();
     collision();
@@ -79,8 +79,7 @@ function moveSnake() {
 
 function reset() {
     // Set a new location for the food
-    food.x = Math.ceil((Math.random() * (canvas.width - BLOCK)) / BLOCK) * BLOCK;
-    food.y = Math.ceil((Math.random() * (canvas.height - BLOCK)) / BLOCK) * BLOCK;
+    foodLocation();
 
     snek.direction = snek.newDirection = 'RIGHT';
     snek.body = [[0,250]];
@@ -93,7 +92,7 @@ function reset() {
     snek.body = setStartBody(START_SNAKE_LENGTH);
 
     SCORE = 0;
-    drawCanvas();
+    drawCanvas('rgb(0,0,0)');
     dropFood();
 }
 
@@ -107,14 +106,6 @@ function setStartBody(length) {
         setStartBody(length);
     }
     return snek.body;
-}
-
-// Draw Canvas
-function drawCanvas() {
-    var width = canvas.width;
-    var height = canvas.height;
-    ctx.fillStyle = 'rgb(0,0,0)';
-    ctx.fillRect(0, 0, width, height);
 }
 
 // Draw Snake on Canvas
@@ -146,13 +137,13 @@ function collision() {
     { 
         // Sidewall collision
         NEWGAME = 0;
+        flashCanvas();
     } 
     else if (TLRed > 100 || BRRed > 100 || TRRed > 100 || BLRed > 100) 
     { 
         // Snake found food
-        snek.length += 4;
-        food.x = Math.random() * (canvas.width - BLOCK);
-        food.y = Math.random() * (canvas.height - BLOCK);
+        snek.length += 5;
+        foodLocation();
         SCORE += 50;
     }
     else  
@@ -167,6 +158,7 @@ function collision() {
             if (headX == snek.body[i][0] && headY == snek.body[i][1])
             {
                 NEWGAME = 0;
+                flashCanvas();
                 break;
             }
         }
@@ -178,14 +170,62 @@ function collision() {
 // The above handles most of the SNAKE functions.
 // --------------------------------------------------
 
+function foodLocation() {
+    // Randomize within the canvas.
+    food.x = Math.ceil((Math.random() * (canvas.width - BLOCK)) / BLOCK) * BLOCK;
+    food.y = Math.ceil((Math.random() * (canvas.height - BLOCK)) / BLOCK) * BLOCK;
+}
+
 function dropFood() {
-    // Randomize within the canvas and draw the food.
+    // Ensure the food does not land on the snake body and draw the food.
+    for (i = 1; i < snek.length; i++)
+    {
+        if (food.x == snek.body[i][0] && food.y == snek.body[i][1])
+        {
+            foodLocation();
+        }
+    }
     let x = food.x;
     let y = food.y;
     ctx.fillStyle = 'rgb(200,0,0)';
     ctx.fillRect(x, y, BLOCK, BLOCK);
 }
 
+// Flash the canvas. Function called upon snake death
+function flashCanvas() {
+    drawCanvas('rgb(0,0,0)');
+    drawSnake();
+    dropFood();
+    setTimeout(function() {
+        drawCanvas('rgb(255,255,255)');
+        drawSnake();
+        dropFood();
+    }, 100);
+    setTimeout(function() {
+        drawCanvas('rgb(0,0,0)');
+        drawSnake();
+        dropFood();
+    }, 200);
+    setTimeout(function() {
+        drawCanvas('rgb(255,255,255)');
+        drawSnake();
+        dropFood();
+    }, 300);
+    setTimeout(function() {
+        drawCanvas('rgb(0,0,0)');
+        drawSnake();
+        dropFood();
+    }, 400);
+    
+}
+
+// Draw Canvas
+function drawCanvas(color) {
+    var width = canvas.width;
+    var height = canvas.height;
+    ctx.fillStyle = color;
+    ctx.fillRect(0, 0, width, height);
+}
 // --------------------------------------------------
 // Below handles keyboard input for snake game.
 
@@ -223,7 +263,7 @@ window.addEventListener('keydown', function(event) {
 }, false);
 
 // Time the snake movements
-setInterval(moveSnake, 20);
+setInterval(moveSnake, 25);
 
 // Read and write to scores.txt
 function writeToFile(filename, score)
