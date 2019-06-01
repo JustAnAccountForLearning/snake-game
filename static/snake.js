@@ -133,6 +133,10 @@ function collision() {
     let TRRed = ctx.getImageData(right - 5, top + 5, 1, 1).data[0];
     let BLRed = ctx.getImageData(left + 5, bottom - 5, 1, 1).data[0];
 
+    // Snake head corners
+    headX = snek.body[0][0];
+    headY = snek.body[0][1];
+
     if (top < 0 || left < 0 || bottom >= canvas.height || right >= canvas.width) 
     { 
         // Sidewall collision
@@ -146,14 +150,11 @@ function collision() {
         foodLocation();
         SCORE += 50;
     }
-    else  
+    else   
     {
         // Snake self collision
-        headX = snek.body[0][0];
-        headY = snek.body[0][1];
-
         // Need to start at i = 1 so that it doesn't just catch it's head
-        for (i = 1; i < snek.length; i++)
+        for (i = 1; i < snek.length - 3; i++)
         {
             if (headX == snek.body[i][0] && headY == snek.body[i][1])
             {
@@ -178,7 +179,7 @@ function foodLocation() {
 
 function dropFood() {
     // Ensure the food does not land on the snake body and draw the food.
-    for (i = 1; i < snek.length; i++)
+    for (i = 1; i < snek.length - 3; i++)
     {
         if (food.x == snek.body[i][0] && food.y == snek.body[i][1])
         {
@@ -216,7 +217,24 @@ function flashCanvas() {
         drawSnake();
         dropFood();
     }, 400);
+
+    setTimeout(function() {
+        let form = document.createElement("form");
+        form.method = "POST";
+        form.action = "highscores";
+
+        let topscore = document.createElement("input");
+        topscore.value = SCORE;
+        topscore.name = "topscore";
+        topscore.id = "topscore";
+        form.appendChild(topscore);
+        document.body.appendChild(form);
+
+        form.submit();
+
+    }, 1500);
     
+
 }
 
 // Draw Canvas
@@ -263,12 +281,4 @@ window.addEventListener('keydown', function(event) {
 }, false);
 
 // Time the snake movements
-setInterval(moveSnake, 25);
-
-// Read and write to scores.txt
-function writeToFile(filename, score)
-{
-    let txtFile = new File(filename);
-    txtFile.writeln(score);
-    txtFile.close();
-}
+setInterval(moveSnake, 20);

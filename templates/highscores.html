@@ -13,11 +13,15 @@
             You (might have) earned a high score
         </div>
         <div>
-            <form action="file:///Users/Thomas/Documents/Snake/templates/gamepage.html" enctype="multipart/form-data" method="post">
-                <input type="text" name="initials">
+            <form action="" enctype="multipart/form-data" method="post">
+                <p>Your Score: {{ data }} </p>
+                <input autofocus type="text" name="initials">
                 <button type="submit">
                     Submit
                 </button>
+            </form>
+            <form action="/gamepage" method="POST">
+                <button type="submit">Play Again</button>
             </form>
         </div>
     </body>

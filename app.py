@@ -16,6 +16,7 @@ def index():
     return render_template("index.html")
 
 
+
 @app.route('/gamepage', methods=['POST','GET'])
 def gamepage():
     """ Page for Snake game display and play. """
@@ -24,8 +25,21 @@ def gamepage():
         return redirect("index")
     return render_template("gamepage.html")
 
-if __name__ == '__main__':
-    app.run()
+
+
+@app.route('/highscores', methods=['POST', 'GET'])
+def highscores():
+    """ Allows the user to input their initials. """
+
+    if request.method == "GET":
+        return redirect("index")
+
+    if request.method == "POST":
+        data = request.form.get("topscore")
+        
+        # TODO: Collect score from the form input 
+
+        return render_template("highscores.html", data = data)
 
 
 @app.route('/recordscore', methods=['POST', 'GET'])
@@ -41,4 +55,12 @@ def recordscore(data):
         
         # TODO: Collect the score. 
         # Add score to the database along with the timecode. 
+
+        # Table created with: CREATE TABLE records (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, score INTEGER NOT NULL, name TEXT NOT NULL, time INTEGER NOT NULL);
     return 1
+
+
+
+
+if __name__ == '__main__':
+    app.run()
