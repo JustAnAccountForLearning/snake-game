@@ -5,7 +5,7 @@ import sqlite3
 app = Flask(__name__)
 
 # Initialized database connection
-DATABASE = '~Documents/Snake/static/scores.db'
+DATABASE = '/home/thomas/www/snake/venv/SnakeGame/scores.db'
 conn = sqlite3.connect(DATABASE)
 db = conn.cursor()
 
