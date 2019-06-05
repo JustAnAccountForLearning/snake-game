@@ -2,7 +2,7 @@
 
 <html>
     <head>
-
+        <script src="{{ url_for('static', filename='highscores.js') }}"></script>
     </head>
 
     <body>
@@ -13,15 +13,16 @@
             You (might have) earned a high score
         </div>
         <div>
-            <form action="" enctype="multipart/form-data" method="post">
+            <form action="/recordscore" enctype="multipart/form-data" method="post">
                 <p>Your Score: {{ data }} </p>
-                <input autofocus type="text" name="initials">
+                <input focus="off" type="text" display="hidden" name="score" id="score" value="{{ data }}">
+                <input autofocus type="text" name="initials" id ="initials" maxlength="3">
                 <button type="submit">
                     Submit
                 </button>
             </form>
             <form action="/gamepage" method="POST">
-                <button type="submit">Play Again</button>
+                <button type="submit">Play Again Without Saving Score</button>
             </form>
         </div>
     </body>
