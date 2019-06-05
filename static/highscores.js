@@ -1,4 +1,4 @@
 $(document).ready( function() {
-    console.log("highscores.js page found");
-    
+
+    // TODO: Manage input into the initials category. Capitalize and restrict to characters
 });

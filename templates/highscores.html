@@ -1,29 +1,47 @@
-<!DOCTYPE html>
+{% extends "layout.html" %}
 
-<html>
-    <head>
-        <script src="{{ url_for('static', filename='highscores.js') }}"></script>
-    </head>
+    {% block title %}
+        highscores
+    {% endblock %}
 
-    <body>
-        <h1>
-            Congratulations!
-        </h1>
-        <div>
-            You (might have) earned a high score
-        </div>
-        <div>
-            <form action="/recordscore" enctype="multipart/form-data" method="post">
-                <p>Your Score: {{ data }} </p>
-                <input focus="off" type="text" display="hidden" name="score" id="score" value="{{ data }}">
-                <input autofocus type="text" name="initials" id ="initials" maxlength="3">
-                <button type="submit">
-                    Submit
-                </button>
-            </form>
-            <form action="/gamepage" method="POST">
-                <button type="submit">Play Again Without Saving Score</button>
-            </form>
-        </div>
-    </body>
-</html>
+    {% block scripts %}
+        <script type="text/javascript" src="{{ url_for('static', filename='highscores.js') }}"></script>
+    {% endblock %}
+
+    {% block body %}
+    <h1>
+        Congratulations!
+    </h1>
+    <div>
+        You (might have) earned a high score
+    </div>
+    <div>
+        <form action="/recordscore" enctype="multipart/form-data" method="post">
+            <p>Your Score: {{ score }} </p>
+            <input focus="off" type="hidden" name="score" id="score" value="{{ score }}">
+            <input autofocus autocomplete="off" type="text" name="initials" id ="initials" maxlength="3">
+            <button type="submit">
+                Submit
+            </button>
+        </form>
+    </div>
+    <div align="center">
+        <table>
+            <tr>
+                <th>SCORE</th>
+                <th>NAME</th>
+            </tr>
+            {% for row in data %}
+                <tr>
+                    <td>{{ row[1] }}</td>
+                    <td>{{ row[2] }}</td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div>
+        <form action="/gamepage" method="POST">
+            <button type="submit">Play Again Without Saving Score</button>
+        </form>
+    </div>
+{% endblock %}
