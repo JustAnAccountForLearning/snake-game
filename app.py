@@ -6,10 +6,11 @@ from datetime import datetime
 app = Flask(__name__)
 
 # Initialized database connection
-DATABASE = '/home/thomas/www/snake/venv/SnakeGame/scores.db'
+DATABASE = '/home/thomas/www/snake/venv/snake-game/scores.db'
 # Table created with: CREATE TABLE records (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, score INTEGER NOT NULL, name TEXT NOT NULL, time TEXT NOT NULL);
-conn = sqlite3.connect(DATABASE)
-db = conn.cursor()
+
+#conn = sqlite3.connect(DATABASE)
+#db = conn.cursor()
 
 @app.route('/')
 @app.route('/index')
@@ -41,8 +42,13 @@ def highscores():
         data = {}
         score = request.form.get("topscore")
 
+        conn = sqlite3.connect(DATABASE)
+        db = conn.cursor()
+
         # TODO: Collect data from the database to show the high score chart
         data = db.execute("SELECT * FROM records ORDER BY score DESC LIMIT 10").fetchall()
+
+        conn.close()
 
         return render_template("highscores.html", data = data, score = score)
 
@@ -62,8 +68,13 @@ def recordscore():
             "time" : str(datetime.now())
         }
 
+        conn = sqlite3.connect(DATABASE)
+        db = conn.cursor()
+
         db.execute("INSERT INTO records (score, name, time) VALUES (:score, :name, :time)", info)
         conn.commit()
+
+        conn.close()
         
     return redirect(url_for("index"))
 
