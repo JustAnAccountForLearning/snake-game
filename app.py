@@ -1,16 +1,14 @@
 import os
 from flask import Flask, redirect, url_for, render_template, request, session, g
-import sqlite3
+import mysql.connector
 from datetime import datetime
 
 app = Flask(__name__)
 
 # Initialized database connection
-DATABASE = '/home/thomas/www/snake/venv/snake-game/scores.db'
-# Table created with: CREATE TABLE records (id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, score INTEGER NOT NULL, name TEXT NOT NULL, time TEXT NOT NULL);
+connection = mysql.connector.connect(host="mydbinstance.czwmx6aikpma.us-east-2.rds.amazonaws.com", user="JustAnAccount", passwd="iW4nGwkfQWHkW6X", database="simpledatabase")
+db = connection.cursor()
 
-#conn = sqlite3.connect(DATABASE)
-#db = conn.cursor()
 
 @app.route('/')
 @app.route('/index')
@@ -42,13 +40,8 @@ def highscores():
         data = {}
         score = request.form.get("topscore")
 
-        conn = sqlite3.connect(DATABASE)
-        db = conn.cursor()
-
-        # TODO: Collect data from the database to show the high score chart
-        data = db.execute("SELECT * FROM records ORDER BY score DESC LIMIT 10").fetchall()
-
-        conn.close()
+        db.execute("SELECT * FROM records ORDER BY score DESC LIMIT 10")
+        data = db.fetchall()
 
         return render_template("highscores.html", data = data, score = score)
 
@@ -61,20 +54,17 @@ def recordscore():
         return redirect("index")
     
     if request.method == "POST":
+
+        # TODO: Sanitize and format the incomming data.
         
-        info = {
-            "score" : request.form.get("score"),
-            "name" : str(request.form.get("initials")),
-            "time" : str(datetime.now())
-        }
+        info = (
+            request.form.get("score"),
+            str(request.form.get("initials")),
+            str(datetime.now())
+        )
 
-        conn = sqlite3.connect(DATABASE)
-        db = conn.cursor()
-
-        db.execute("INSERT INTO records (score, name, time) VALUES (:score, :name, :time)", info)
-        conn.commit()
-
-        conn.close()
+        db.execute("INSERT INTO records (score, name, time) VALUES (%s, %s, %s)", info)
+        connection.commit()
         
     return redirect(url_for("index"))
 

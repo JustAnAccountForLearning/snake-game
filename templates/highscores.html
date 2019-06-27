@@ -31,12 +31,14 @@
                 <th>SCORE</th>
                 <th>NAME</th>
             </tr>
-            {% for row in data %}
-                <tr>
-                    <td>{{ row[1] }}</td>
-                    <td>{{ row[2] }}</td>
-                </tr>
-            {% endfor %}
+            {% if data %}
+                {% for row in data %}
+                    <tr>
+                        <td>{{ row[0] }}</td>
+                        <td>{{ row[1] }}</td>
+                    </tr>
+                {% endfor %}
+            {% endif %}
         </table>
     </div>
     <div>
