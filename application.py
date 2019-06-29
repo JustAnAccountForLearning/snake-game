@@ -3,7 +3,7 @@ from flask import Flask, redirect, url_for, render_template, request, session, g
 import mysql.connector
 from datetime import datetime
 
-app = Flask(__name__)
+application = Flask(__name__)
 
 # Initialized database connection
 connection = mysql.connector.connect(host="mydbinstance.czwmx6aikpma.us-east-2.rds.amazonaws.com", user="JustAnAccount", passwd="iW4nGwkfQWHkW6X", database="simpledatabase")
@@ -12,8 +12,8 @@ db = connection.cursor()
 application = Flask(__name__)
 
 
-@app.route('/')
-@app.route('/index')
+@application.route('/')
+@application.route('/index')
 def index():
     """ Home page that allows game start selection. """
 
@@ -21,7 +21,7 @@ def index():
 
 
 
-@app.route('/gamepage', methods=['POST','GET'])
+@application.route('/gamepage', methods=['POST','GET'])
 def gamepage():
     """ Page for Snake game display and play. """
 
@@ -31,7 +31,7 @@ def gamepage():
 
 
 
-@app.route('/highscores', methods=['POST', 'GET'])
+@application.route('/highscores', methods=['POST', 'GET'])
 def highscores():
     """ Allows the user to input their initials. """
 
@@ -48,7 +48,7 @@ def highscores():
         return render_template("highscores.html", data = data, score = score)
 
 
-@app.route('/recordscore', methods=['POST', 'GET'])
+@application.route('/recordscore', methods=['POST', 'GET'])
 def recordscore():
     """ Records the within the database. """
 
