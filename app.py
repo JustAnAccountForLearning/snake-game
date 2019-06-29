@@ -9,6 +9,8 @@ app = Flask(__name__)
 connection = mysql.connector.connect(host="mydbinstance.czwmx6aikpma.us-east-2.rds.amazonaws.com", user="JustAnAccount", passwd="iW4nGwkfQWHkW6X", database="simpledatabase")
 db = connection.cursor()
 
+application = Flask(__name__)
+
 
 @app.route('/')
 @app.route('/index')
@@ -72,4 +74,5 @@ def recordscore():
 
 
 if __name__ == '__main__':
-    app.run()
+    application.debug = True
+    application.run()
