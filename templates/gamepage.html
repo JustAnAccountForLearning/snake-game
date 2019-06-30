@@ -12,11 +12,14 @@
         game page
     {% endblock %}
     {% block body %}
-    <h1>SNAKE</h1>
-    <h3>Eat the food.</h3>
+        <h1>Snake</h1>
+        <h3>Eat the food.</h3>
+        <h4>Press [ SPACE ] to start. </h4>
         <canvas class = "myCanvas game-border" width="750" height="500"></canvas>
         <script src="{{ url_for('static', filename='snake.js') }}"></script>
         <div id="this-score">
             SCORE
         </div>
+
+        
     {% endblock %}

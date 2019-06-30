@@ -12,40 +12,57 @@
     <h1>
         Congratulations!
     </h1>
-    {% if score %}
-        <div>
-            You (might have) earned a high score
-        </div>
-        <div> 
-            <form action="/recordscore" enctype="multipart/form-data" method="post">
-                <p>Your Score: {{ score }} </p>
-                <input focus="off" type="hidden" name="score" id="score" value="{{ score }}">
-                <input autofocus autocomplete="off" type="text" name="initials" id ="initials" maxlength="3">
-                <button type="submit">
-                    Submit
-                </button>
-            </form>
-        </div>
-    {% endif %}
-    <div align="center">
-        <table>
-            <tr>
-                <th>SCORE</th>
-                <th>NAME</th>
-            </tr>
-            {% if data %}
-                {% for row in data %}
-                    <tr>
-                        <td>{{ row[0] }}</td>
-                        <td>{{ row[1] }}</td>
-                    </tr>
-                {% endfor %}
+    <div class="container-fluid">
+
+            {% if score %}
+                <div class="form-group"> 
+                    <form action="/recordscore" enctype="multipart/form-data" method="post">
+                        <h2>Your Score: {{ score }} </h2>
+                        <div class="row">
+                            <div class="col-md-5"></div>
+                            <div class="col-md-2">
+                                <div class="input-group">
+                                    <input focus="off" type="hidden" name="score" id="score" value="{{ score }}">
+                                    <input autofocus autocomplete="off" class="form-control" type="text" name="initials" id ="initials" maxlength="3">
+                                    <button class="btn btn-primary" type="submit">
+                                        Submit
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-md-5"></div>
+                        </div>
+                    </form>
+                </div>
             {% endif %}
-        </table>
-    </div>
+
+            <div class="row">
+                <div class="col-md-5"></div>
+                <div class="col-md-2">
+                    <div align="center">
+                        <table class="table table-sm table-striped table-bordered">
+                            <thead class="thead-dark">
+                                <tr align="center" class=>
+                                    <th text-align="center">NAME</th>
+                                    <th text-align="center">SCORE</th>
+                                </tr>
+                            </thead>
+                            {% if data %}
+                                {% for row in data %}
+                                    <tr>
+                                        <td align="center">{{ row[1] }}</td>
+                                        <td align="center">{{ row[0] }}</td>
+                                    </tr>
+                                {% endfor %}
+                            {% endif %}
+                        </table>
+                    </div>
+                </div>
+                <div class="col-md-5"></div>
+            </div>    
+        </div>
     <div>
-        <form action="/gamepage" method="POST">
-            <button type="submit">Play Again Without Saving Score</button>
+        <form action="{{ url_for('index') }}" method="GET">
+            <button class="btn btn-primary" type="submit">BACK TO HOME</button>
         </form>
     </div>
 {% endblock %}

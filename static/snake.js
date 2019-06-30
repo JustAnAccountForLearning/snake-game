@@ -80,6 +80,7 @@ function moveSnake() {
 function reset() {
     // Set a new location for the food
     foodLocation();
+    document.getElementsByTagName("h4")[0].style.visibility = "hidden";
 
     snek.direction = snek.newDirection = 'RIGHT';
     snek.body = [[0,250]];
