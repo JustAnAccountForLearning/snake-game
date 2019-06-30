@@ -15,5 +15,10 @@
                 PLAY
             </button>
         </form>
+        <form action="{{ url_for('highscores') }}" method="post">
+            <button type="submit" class="button">
+                HIGH SCORES
+            </button>
+        </form>
     </div>
 {% endblock %}

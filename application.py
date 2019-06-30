@@ -2,6 +2,7 @@ import os
 from flask import Flask, redirect, url_for, render_template, request, session, g
 import mysql.connector
 from datetime import datetime
+from helpers import formatname
 
 application = Flask(__name__)
 
@@ -57,11 +58,12 @@ def recordscore():
     
     if request.method == "POST":
 
-        # TODO: Sanitize and format the incomming data.
+        # Sanitize and format the incomming initials.
+        name = formatname(request.form.get("initials"))
         
         info = (
             request.form.get("score"),
-            str(request.form.get("initials")),
+            name,
             str(datetime.now())
         )
 
