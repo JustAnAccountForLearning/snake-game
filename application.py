@@ -10,8 +10,6 @@ application = Flask(__name__)
 connection = mysql.connector.connect(host="mydbinstance.czwmx6aikpma.us-east-2.rds.amazonaws.com", user="JustAnAccount", passwd="iW4nGwkfQWHkW6X", database="simpledatabase")
 db = connection.cursor()
 
-application = Flask(__name__)
-
 
 @application.route('/')
 @application.route('/index')
