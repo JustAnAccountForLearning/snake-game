@@ -19,6 +19,9 @@
         <!-- Fonts from google -->
         <link href="https://fonts.googleapis.com/css?family=Stylish&display=swap" rel="stylesheet">
 
+        <!-- Favicon setup -->
+        <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+
         {% block scripts %} {% endblock %}
 
         <title>Snake: {% block title %} {% endblock %}</title>
