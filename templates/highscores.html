@@ -39,7 +39,7 @@
                 <div class="col-md-5"></div>
                 <div class="col-md-2">
                     <div align="center">
-                        <table class="table table-sm table-striped table-bordered">
+                        <table class="table table-sm table-striped table-bordered table-condensed">
                             <thead class="thead-dark">
                                 <tr align="center" class=>
                                     <th text-align="center">NAME</th>
@@ -49,8 +49,8 @@
                             {% if data %}
                                 {% for row in data %}
                                     <tr>
-                                        <td align="center">{{ row[1] }}</td>
-                                        <td align="center">{{ row[0] }}</td>
+                                        <td align="center"><strong>{{ row[1] }}</strong></td>
+                                        <td align="center"><strong>{{ row[0] }}</strong></td>
                                     </tr>
                                 {% endfor %}
                             {% endif %}
