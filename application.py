@@ -4,7 +4,12 @@ import mysql.connector
 from datetime import datetime
 from helpers import formatname
 
+# Configure Flask
 application = Flask(__name__)
+application.secret_key = 'bBX18z8wcJZq9YeUIBGd1CZTia7UDi27' # Randomly generated key
+
+# Ensure templates are auto-reloaded
+application.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # Initialized database connection
 connection = mysql.connector.connect(host="mydbinstance.czwmx6aikpma.us-east-2.rds.amazonaws.com", user="JustAnAccount", passwd="iW4nGwkfQWHkW6X", database="simpledatabase")
