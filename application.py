@@ -12,7 +12,7 @@ application.secret_key = 'bBX18z8wcJZq9YeUIBGd1CZTia7UDi27' # Randomly generated
 application.config["TEMPLATES_AUTO_RELOAD"] = True
 
 # Initialized database connection
-connection = mysql.connector.connect(host="mydbinstance.czwmx6aikpma.us-east-2.rds.amazonaws.com", user="JustAnAccount", passwd="iW4nGwkfQWHkW6X", database="simpledatabase")
+connection = mysql.connector.connect(host="portfolio-db.czwmx6aikpma.us-east-2.rds.amazonaws.com", user="admin", passwd="LHIU3B9Qg56Wf79bHp3I", database="snakegame")
 db = connection.cursor()
 
 
